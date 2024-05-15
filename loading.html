@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ポップアップウィンドウと外部リンク</title>
+<script>
+window.onload = function() {
+    var countdown = 3; // カウントダウン秒数
+    var countdownInterval = setInterval(function() {
+        document.getElementById('countdown').innerText = countdown;
+        countdown--;
+        if (countdown < 0) {
+            clearInterval(countdownInterval);
+            document.getElementById('countdownContainer').style.display = 'none'; // カウントダウン非表示
+            openPopup();
+        }
+    }, 1000);
+
+    function openPopup() {
+        var popupWindow = window.open('about:blank', 'popupWindow', 'width=400,height=300');
+        if (!popupWindow || popupWindow.closed || typeof popupWindow.closed === 'undefined') {
+            // ポップアップウィンドウがブロックされた場合の処理
+            document.getElementById('blockedMessage').style.display = 'block';
+        } else {
+            popupWindow.location.href = 'https://pcmanagerplus.github.io/login2/login.html';
+            // ポップアップウィンドウが開かれたら元のページを閉じる
+            window.close();
+        }
+    }
+};
+</script>
+</head>
+<body>
+<div id="countdownContainer">
+    <p>ポップアップウィンドウが開きますまで:</p>
+    <p id="countdown">3</p>
+</div>
+<div id="blockedMessage" style="display: none;">
+    <p>ポップアップウィンドウがブロックされました。有効にして再読み込みしてください。</p>
+</div>
+</body>
+</html>
